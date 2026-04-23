@@ -25,3 +25,10 @@ Vista previa: `(cd astro && npm run preview)`.
 ## CI
 
 Ver `.github/workflows/deploy-astro.yml` y la guía en `astro/DEPLOY.md`.
+
+## Sigues viendo el README en la web
+
+1. Abre **`https://lorenzoadr.github.io/VarMonitor/`** (no la página del repo en github.com).
+2. En **Settings → Pages**, desactiva cualquier **Deploy from a branch** / carpeta **`/(root)`** en `main`. Solo debe figurar **Source: GitHub Actions**.
+3. En **Actions**, comprueba que **Deploy Astro to GitHub Pages** haya corrido tras tu último push (si solo tocabas `README.md`, antes el workflow podía no ejecutarse; ya está configurado para lanzarse en cualquier cambio en `main`).
+4. Opcional: **Actions → Deploy Astro → Run workflow** para forzar un despliegue.

@@ -8,14 +8,9 @@ name: Deploy Astro to GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - 'astro/**'
-      - '.github/workflows/deploy-astro.yml'
-      - 'scripts/build_docs_for_astro.sh'
-      - 'mkdocs.yml'
-      - 'mkdocs.en.yml'
-      - 'docs/**'
-      - 'docs_en/**'
+    # Sin filtro `paths`: si solo cambias README.md u otros ficheros en la raíz, el workflow
+    # también debe ejecutarse; si no, Pages puede seguir con el último despliegue antiguo
+    # (p. ej. «Deploy from branch» mostrando solo el README).
   workflow_dispatch:
 
 permissions:
@@ -70,6 +65,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
