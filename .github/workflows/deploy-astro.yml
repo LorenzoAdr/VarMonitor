@@ -1,0 +1,73 @@
+# Despliega el sitio estático en astro/dist a GitHub Pages (landing + MkDocs en /docs/es|en).
+# Requiere: Settings → Pages → Build and deployment → Source: GitHub Actions.
+# URL esperada (repo VarMonitor): https://LorenzoAdr.github.io/VarMonitor/
+# El nombre del repo debe coincidir con astro.config.mjs → base: '/VarMonitor/'
+
+name: Deploy Astro to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'astro/**'
+      - '.github/workflows/deploy-astro.yml'
+      - 'scripts/build_docs_for_astro.sh'
+      - 'mkdocs.yml'
+      - 'mkdocs.en.yml'
+      - 'docs/**'
+      - 'docs_en/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # v6: runtime Node 24 en la acción (v4 usaba Node 20; aviso deprecación GH)
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install MkDocs (Material + pymdownx)
+        run: pip install mkdocs mkdocs-material pymdown-extensions
+
+      - name: Build MkDocs into astro/public/docs
+        run: ./scripts/build_docs_for_astro.sh
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: astro/package-lock.json
+
+      - name: Install and build Astro
+        working-directory: astro
+        run: |
+          npm ci
+          npm run build
+
+      # v5: compatible con deploy-pages@v5; evita avisos de Node 20 deprecado en la acción
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: astro/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      # v5: acción de despliegue en Node 24
+      - id: deployment
+        uses: actions/deploy-pages@v5

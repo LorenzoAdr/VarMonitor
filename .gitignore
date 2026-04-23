@@ -1,0 +1,12 @@
+node_modules/
+dist-docs/
+# Salida MkDocs (regenerar con mkdocs build o scripts/build_docs_for_astro.sh)
+site/
+site_en/
+# Copia embebida en Astro (la genera build_docs_for_astro.sh)
+astro/public/docs/es/
+astro/public/docs/en/
+astro/dist/
+astro/.astro/
+.env
+*.log
