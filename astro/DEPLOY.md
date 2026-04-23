@@ -83,7 +83,7 @@ Eso solo coincide si el repositorio en GitHub se llama **`VarMonitor`** y está 
 
 3. **Ejecutarlo a mano**: **Actions** → clic en **“Deploy Astro to GitHub Pages”** → botón **“Run workflow”** (derecha) → rama `main` → **Run workflow**. Eso usa `workflow_dispatch` y no depende de que hayas tocado `astro/` en el último commit.
 
-4. **Pages → origen del despliegue**: *Settings* → *Pages* → *Build and deployment* → *Source*: **GitHub Actions** (no “Deploy from a branch” salvo que uses otro flujo).
+4. **Pages → origen del despliegue**: *Settings* → *Pages* → *Build and deployment* → *Source*: **GitHub Actions** únicamente. Si dejas también **Deploy from a branch** (p. ej. `/ (root)` en `main`), GitHub puede servir el **README** u otro contenido distinto del artefacto de Astro; desactiva el despliegue por rama para este repo y usa solo Actions.
 
 5. Tras un despliegue correcto, la URL suele mostrarse en el job **deploy** y en *Settings* → *Pages*.
 
