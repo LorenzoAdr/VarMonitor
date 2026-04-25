@@ -9,9 +9,9 @@ const baseUrl = new URL(import.meta.env.BASE_URL, site);
 const canonicalURL = baseUrl.href;
 const ogImageURL = new URL('og-card.png', baseUrl).href;
 
-const seoTitle = 'VarMonitor | Real-time C++ observability for high-performance systems';
+const seoTitle = 'VarMonitor | Runtime observability and deterministic replay for C++ systems';
 const seoDescription =
-	'VarMonitor delivers realtime observability for C++ high-performance systems: shared-memory telemetry, low-latency WebSocket paths, and a modern web UI for engineering teams that cannot afford stalls on the hot path.';
+	'VarMonitor gives C++ and embedded teams live internal visibility, deterministic recording/replay, anomaly analysis, and remote debug workflows with low runtime overhead.';
 
 const base = import.meta.env.BASE_URL;
 const docsHrefEn = 'docs/en/index.html';
@@ -25,36 +25,42 @@ const docsMk = {
 
 const extensibilityCards = [
 	{
-		title: '3D Flight Visualization',
-		body: 'Spatial telemetry scenes with attitude and trajectory context, including simulated PFD and joystick control-loop interaction.',
+		title: 'Observability & Interactive Control',
+		body: 'Live variables, real-time dashboards, event-aware views, and optional joystick-assisted control for dynamic runtime testing.',
 		videoThumbSrc: `${base}videos/live_3d.mp4`,
 		videoModalSrc: `${base}videos/live_3d.mp4`,
 		svgPath:
 			'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 5l-2-1-2 1M4 5l2-1M4 5l2 1M4 5v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5',
 	},
 	{
-		title: 'Automatic Documentation',
-		body: 'Generated technical docs that stay aligned with architecture and runtime behavior.',
+		title: 'Analysis & Reporting',
+		body: 'Offline analysis workflows, anomaly detection support, and report-ready outputs to document behavior and compare runs.',
 		svgPath:
 			'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
 	},
 	{
 		title: 'Remote IDE & Debug',
-		body: 'Browser-based coding surface and process attach tooling for distributed diagnostics.',
+		body: 'Web-based remote debugging, file browsing/editing, fast regex indexing, and lightweight debugger integration for rapid iteration.',
 		videoThumbSrc: `${base}videos/archivo_bien.mp4`,
 		videoModalSrc: `${base}videos/archivo_bien.mp4`,
 		svgPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
 	},
 	{
-		title: 'Git Remote Management',
-		body: 'Repository operations from your monitoring cockpit without breaking operational focus.',
+		title: 'Git Interface',
+		body: 'Remote repository management from the web interface, enabling operational Git workflows without leaving the monitoring environment.',
 		videoThumbSrc: `${base}videos/git.mp4`,
 		videoModalSrc: `${base}videos/git.mp4`,
 		svgPath: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
 	},
 	{
+		title: 'Apache Parquet Recording',
+		body: 'Optimized recording for large datasets with Apache Parquet output, compatible with ring-buffer capture paths controlled through configurable launch flags.',
+		svgPath:
+			'M4 7h16M6 4h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2zm2 5h8m-8 4h8m-8 4h5',
+	},
+	{
 		title: 'ARINC 429 & MIL-STD-1553',
-		body: 'Real-time decode, parity and SSM checks, plus SQLite-backed registries tailored for avionics stacks.',
+		body: 'Real-time protocol decoding with parity/SSM validation and extendable user-defined databases for avionics-oriented workflows.',
 		videoThumbSrc: `${base}videos/ficha_arinc.mp4`,
 		videoModalSrc: `${base}videos/live_arinc.mp4`,
 		svgPath:
@@ -126,21 +132,28 @@ const extensibilityCards = [
 		<div id="top" class="sr-only" aria-hidden="true"></div>
 
 		<main>
-			<section data-reveal class="relative overflow-hidden px-6 py-24 lg:px-8 lg:py-32">
+			<div class="pointer-events-none fixed right-4 top-24 z-40">
+				<div class="rounded-full border border-white/10 bg-slate-950/88 px-3 py-1.5 shadow-lg shadow-black/30 backdrop-blur-md">
+					<p id="vm-stepper-current" class="font-mono text-[11px] uppercase tracking-[0.16em] text-cyan-200/95">1/5 Overview</p>
+				</div>
+			</div>
+
+			<section id="overview" data-reveal class="relative overflow-hidden px-6 py-24 lg:px-8 lg:py-32">
 				<div class="pointer-events-none absolute inset-0 -z-10">
 					<div class="absolute left-1/2 top-0 h-[28rem] w-[54rem] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
 				</div>
 				<div class="mx-auto max-w-4xl text-center">
+					<p class="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-300/90">Step 1/8 - Overview</p>
 					<div class="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 px-4 py-1.5 font-mono text-xs uppercase tracking-widest text-cyan-300">
 						<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400"></span>
-						C++ High-Performance Telemetry
+						Runtime observability for C++ and embedded
 					</div>
 					<h1 class="bg-gradient-to-b from-white to-slate-500 bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
-						VarMonitor: Modern tools for a modern engineering age.
+						Understand, replay, and validate your system while it runs.
 					</h1>
 					<p class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-400 sm:text-xl">
-						A high-performance framework for real-time observability and monitoring. Insert mission-critical data with zero-latency
-						and empower your team with flexible development tools.
+						VarMonitor is a runtime observability and replay platform for C++ systems. It helps teams monitor internal variables live,
+						reproduce issues deterministically, analyze anomalies offline, and test behavior by injecting values in real time through a remote web interface.
 					</p>
 				</div>
 			</section>
@@ -159,15 +172,58 @@ const extensibilityCards = [
 						>
 							Your browser does not support embedded videos.
 						</video>
+						<p class="px-3 pb-2 pt-3 text-center text-xs text-slate-400 md:px-4">
+							What you are seeing is a real capture of VarMonitor tracking a large set of internal variables and plotting them live in the runtime dashboard.
+						</p>
 					</div>
 				</div>
 			</section>
 
-			<section id="native-pipeline" data-reveal class="border-t border-white/5 bg-slate-950 px-6 py-24 lg:px-8 lg:py-32">
+			<section id="problem" data-reveal class="border-t border-white/5 bg-slate-900 px-6 py-20 lg:px-8 lg:py-24">
 				<div class="mx-auto max-w-6xl">
-					<h2 class="text-center font-mono text-sm uppercase tracking-widest text-cyan-400/80">Native Pipeline</h2>
+					<div class="mx-auto max-w-2xl text-center">
+						<p class="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-300/90">Step 2/5 - Problem + Solution</p>
+						<h2 class="font-mono text-sm uppercase tracking-widest text-cyan-400/80">Core Engineering Workflows</h2>
+						<p class="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">Capabilities that map to real C++ engineering work.</p>
+						<p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-400">
+							All workflows run through a modern, easy-to-use interface that also works for non-technical roles, while remaining fully customizable for advanced engineering teams. VarMonitor provides a full web interface for remote access to all capabilities, improving operational flexibility across development and runtime teams.
+						</p>
+					</div>
+					<div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+						<article class="rounded-2xl border border-slate-800/50 bg-slate-900/60 p-6 backdrop-blur-md">
+							<h3 class="font-mono text-xs uppercase tracking-widest text-cyan-300/90">Live Observability</h3>
+							<p class="mt-3 text-sm leading-relaxed text-slate-400">
+								Monitor internal variables and event context in real time to understand runtime behavior as it happens, without breaking execution flow.
+							</p>
+						</article>
+						<article id="solution" class="rounded-2xl border border-cyan-400/35 bg-slate-900/60 p-6 shadow-[0_0_24px_rgba(34,211,238,0.12)] backdrop-blur-md">
+							<h3 class="font-mono text-xs uppercase tracking-widest text-cyan-300/90">Deterministic Replay</h3>
+							<p class="mt-3 text-sm leading-relaxed text-slate-300">
+								Record executions and replay the same scenario with stable timing context, making intermittent issues reproducible and fixes verifiable.
+							</p>
+						</article>
+						<article class="rounded-2xl border border-slate-800/50 bg-slate-900/60 p-6 backdrop-blur-md">
+							<h3 class="font-mono text-xs uppercase tracking-widest text-cyan-300/90">Runtime Validation</h3>
+							<p class="mt-3 text-sm leading-relaxed text-slate-400">
+								Inject variable values and run offline analysis/reporting workflows to validate system responses under controlled engineering scenarios.
+							</p>
+						</article>
+						<article class="rounded-2xl border border-slate-800/50 bg-slate-900/60 p-6 backdrop-blur-md">
+							<h3 class="font-mono text-xs uppercase tracking-widest text-cyan-300/90">Remote Access</h3>
+							<p class="mt-3 text-sm leading-relaxed text-slate-400">
+								Access VarMonitor through its remote web interface with a low-friction workflow designed for fast, easy entry from distributed engineering environments.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<section id="architecture" data-reveal class="border-t border-white/5 bg-slate-950 px-6 py-24 lg:px-8 lg:py-32">
+				<div class="mx-auto max-w-6xl">
+					<p class="mb-3 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-300/90">Step 3/5 - Architecture</p>
+					<h2 class="text-center font-mono text-sm uppercase tracking-widest text-cyan-400/80">Architecture (low overhead)</h2>
 					<p class="mx-auto mt-4 max-w-3xl text-center text-3xl font-semibold tracking-tight text-white md:text-4xl">
-						C++ speed, zero-copy transport, web-grade observability.
+						Low-intrusion runtime insight powered by SHM, ring buffers, and efficient IPC.
 					</p>
 
 					<div class="relative mx-auto mt-14 max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-slate-900/45 p-6 shadow-2xl shadow-black/40 backdrop-blur-sm md:p-8">
@@ -253,13 +309,14 @@ const extensibilityCards = [
 				</div>
 			</section>
 
-			<section data-reveal class="border-t border-white/5 bg-slate-900 px-6 py-24 lg:px-8 lg:py-32">
+			<section id="capabilities" data-reveal class="border-t border-white/5 bg-slate-900 px-6 py-24 lg:px-8 lg:py-32">
 				<div class="mx-auto max-w-6xl">
 					<div class="mx-auto max-w-2xl text-center">
-						<h2 class="font-mono text-sm uppercase tracking-widest text-cyan-400/80">Extensibility</h2>
-						<p class="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">Plug into your mission stack.</p>
+						<p class="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-300/90">Step 4/5 - Capabilities</p>
+						<h2 class="font-mono text-sm uppercase tracking-widest text-cyan-400/80">Key Capabilities</h2>
+						<p class="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">One core platform, extended by workflow-aligned plugins.</p>
 						<p class="mt-3 font-mono text-xs uppercase tracking-wider text-cyan-200/70">
-							Avionics-grade modularity for rapid prototyping.
+							Plugins adapt to your project and engineering workflow - your workflow does not adapt to the tool.
 						</p>
 					</div>
 
@@ -313,10 +370,25 @@ const extensibilityCards = [
 				</div>
 			</section>
 
-			<section data-reveal class="border-t border-white/5 bg-slate-950 px-6 py-24 lg:px-8 lg:py-28">
+			<section id="start" data-reveal class="border-t border-white/5 bg-slate-950 px-6 py-24 lg:px-8 lg:py-28">
 				<div class="mx-auto max-w-4xl text-center">
-					<h2 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">Ready to evaluate VarMonitor?</h2>
-					<p class="mx-auto mt-4 max-w-2xl text-slate-400">Inspect architecture, protocol support and operational UX in one place.</p>
+					<p class="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-300/90">Step 5/5 - Start</p>
+					<h2 class="text-3xl font-semibold tracking-tight text-white md:text-4xl">Easy to integrate, engineered for ultra-light runtime impact.</h2>
+					<p class="mx-auto mt-4 max-w-2xl text-slate-400">
+						Add VarMonitor to your build as a CMake module and link it as a shared library. Integration is intentionally minimal and fits naturally into existing C++ project structures.
+					</p>
+					<p class="mx-auto mt-3 max-w-2xl text-slate-400">
+						From there, startup is straightforward: initialize one monitor session and register the internal variables you want to expose at runtime.
+					</p>
+					<div class="mx-auto mt-6 max-w-3xl rounded-2xl border border-cyan-400/30 bg-slate-900/60 p-5 text-left shadow-[0_0_24px_rgba(34,211,238,0.12)]">
+						<p class="font-mono text-xs uppercase tracking-widest text-cyan-300/90">Quick start pseudocode</p>
+						<pre class="mt-3 overflow-x-auto rounded-xl border border-cyan-500/20 bg-slate-950/80 p-4 text-xs text-cyan-100"><code>// C++ pseudocode
+varmonitor::Session vm("flight_ctrl");
+vm.watch("att.roll_deg", roll_deg);
+vm.watch("att.pitch_deg", pitch_deg);
+vm.watch("nav.mode", nav_mode);
+vm.flush_snapshot();</code></pre>
+					</div>
 					<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
 						<a
 							href="https://github.com/LorenzoAdr/RealTimeMonitor"
@@ -324,7 +396,7 @@ const extensibilityCards = [
 							rel="noopener noreferrer"
 							class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 text-base font-semibold text-white shadow-[0_12px_36px_rgba(34,211,238,0.35)] transition hover:brightness-110 hover:shadow-[0_18px_45px_rgba(34,211,238,0.45)]"
 						>
-							Explore GitHub
+							View Source Code
 							<svg class="h-5 w-5 transition group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
 							</svg>
@@ -333,7 +405,7 @@ const extensibilityCards = [
 							href={docsHrefEn}
 							class="inline-flex items-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-8 py-4 text-base font-semibold text-cyan-200 transition hover:border-cyan-400/60 hover:bg-cyan-500/15 hover:text-cyan-100"
 						>
-							Get Early Access
+							Read Technical Docs
 						</a>
 					</div>
 				</div>
@@ -381,16 +453,10 @@ const extensibilityCards = [
 					<div data-pipeline-panel="cpp" class="hidden space-y-4 text-sm leading-relaxed text-slate-400">
 						<p class="text-base font-semibold text-white">C++ Core</p>
 						<p>
-							The producer is built on <strong class="text-slate-200">C++20</strong> features where they reduce boilerplate and improve safety on the hot path: clearer constraints, better constexpr usage, and modern synchronization primitives aligned with your target.
+							VarMonitor integrates into your C++ runtime with a low-intrusion publisher path focused on stable timing and predictable behavior under load.
 						</p>
 						<p>
-							<strong class="text-slate-200">Atomicity</strong> where it matters keeps publisher state consistent across threads: snapshot counters, sequence fields, and coordination with semaphores so readers see coherent frames without extra locking on every read.
-						</p>
-						<p>
-							<strong class="text-slate-200">Avoiding unnecessary copies</strong> is central: the library maps the same logical variables into a shared layout so the producer writes in place into the segment instead of marshalling per variable into temporary buffers on every cycle.
-						</p>
-						<p>
-							For heavier workloads you can structure work so a <strong class="text-slate-200">second writer path</strong> runs in a <strong class="text-slate-200">parallel thread</strong> (e.g. dedicated sampling or aggregation) while the main loop keeps deterministic timing—still feeding one coherent SHM snapshot strategy.
+							Critical state updates are coordinated so readers consume coherent snapshots, while write paths avoid extra copies whenever possible.
 						</p>
 						<a
 							href={docsMk.cpp}
@@ -403,13 +469,10 @@ const extensibilityCards = [
 					<div data-pipeline-panel="shm" class="hidden space-y-4 text-sm leading-relaxed text-slate-400">
 						<p class="text-base font-semibold text-white">Shared memory (SHM)</p>
 						<p>
-							The segment is <strong class="text-slate-200">bidirectional in purpose</strong>: the C++ side publishes a <strong class="text-slate-200">table of variable rows</strong> in the mmap; the Python side maps the same region to read snapshots. Control and metadata still flow over <strong class="text-slate-200">UDS</strong> (commands, discovery), while bulk data stays in the mapped region—no per-sample copy through a socket.
+							SHM carries bulk runtime data with minimal overhead, while control metadata uses UDS. This split keeps latency low and avoids socket-heavy sample transport.
 						</p>
 						<p>
-							Compared to <strong class="text-slate-200">TCP/UDP or pipes</strong>, SHM avoids serialization stacks, kernel copy churn, and jitter from stream buffers. For the same machine, latency is dominated by wake + map + parse, not by moving bytes through a socket stack.
-						</p>
-						<p>
-							In <strong class="text-slate-200">v2</strong> layout, the segment has a <strong class="text-slate-200">table of rows</strong>: each row is <strong class="text-slate-200">one variable</strong>, with its own mode (snapshot vs ring), type, and—when ring export is enabled—<strong class="text-slate-200">dedicated ring metadata</strong> (capacity, <code class="rounded bg-slate-800/80 px-1 font-mono text-cyan-200/80">write_idx</code>, <code class="rounded bg-slate-800/80 px-1 font-mono text-cyan-200/80">read_idx</code>) and <strong class="text-slate-200">that variable’s sample ring</strong> in the arena. Bursts on one signal do not share a single FIFO with the rest: each ring may drop only its own stale samples when full, without blocking the producer.
+							The layout keeps per-variable state explicit, including ring metadata where needed, so bursty signals do not block the rest of the monitored set.
 						</p>
 						<div class="overflow-hidden rounded-xl border border-cyan-500/25 bg-gradient-to-br from-slate-950 via-slate-950 to-cyan-950/30 p-4 shadow-[inset_0_1px_0_rgba(34,211,238,0.12)]">
 							<p class="mb-3 text-center font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-cyan-400/90">
@@ -512,13 +575,10 @@ const extensibilityCards = [
 					<div data-pipeline-panel="consumer" class="hidden space-y-4 text-sm leading-relaxed text-slate-400">
 						<p class="text-base font-semibold text-white">Python consumer</p>
 						<p>
-							The <strong class="text-slate-200">FastAPI</strong> app bridges the native world: it connects to the C++ instance over UDS, maps the SHM segment, and runs a reader thread that pushes snapshots into a queue consumed by the WebSocket loop.
+							A <strong class="text-slate-200">FastAPI</strong> backend bridges native runtime data to the browser through WebSocket without exposing direct host access to every operator.
 						</p>
 						<p>
-							<strong class="text-slate-200">Live data</strong> reaches the browser on <code class="rounded bg-slate-800/80 px-1.5 py-0.5 font-mono text-cyan-200/90">/ws</code> as <code class="rounded bg-slate-800/80 px-1.5 py-0.5 font-mono text-cyan-200/90">vars_update</code> payloads (throttled by visual vs monitoring rates). The UI stays responsive with virtualized lists, delta-friendly updates, and a layout built for drag-and-drop panels so you can arrange plots, alarms, and tools without fighting the framework.
-						</p>
-						<p>
-							Together, that yields a <strong class="text-slate-200">modern, dense operator surface</strong>: inspect variables, tune subscriptions, and drive recordings from one session.
+							Live `vars_update` streams feed dashboards, replay tools, and control actions in one session so teams can debug, validate, and report from the same interface.
 						</p>
 						<a
 							href={docsMk.consumer}
@@ -688,6 +748,43 @@ const extensibilityCards = [
 				document.addEventListener('keydown', (e) => {
 					if (e.key === 'Escape' && pluginModalRoot?.classList.contains('plugin-video-modal--open')) closePluginVideo();
 				});
+
+				const stepOrder = ['overview', 'problem', 'architecture', 'capabilities', 'start'];
+				const stepLabels = {
+					overview: 'Overview',
+					problem: 'Problem+Solution',
+					architecture: 'Architecture',
+					capabilities: 'Capabilities',
+					start: 'Start',
+				};
+				const stepLabel = document.getElementById('vm-stepper-current');
+				let activeStepIdx = 0;
+
+				const applyStepperState = (idx) => {
+					activeStepIdx = idx;
+					const key = stepOrder[idx];
+					const name = stepLabels[key] || key;
+					if (stepLabel) stepLabel.textContent = `${idx + 1}/${stepOrder.length} ${name}`;
+				};
+
+				const stepSections = stepOrder
+					.map((id) => ({ id, el: document.getElementById(id) }))
+					.filter((entry) => entry.el);
+
+				if (stepSections.length) {
+					const stepObserver = new IntersectionObserver(
+						(entries) => {
+							entries.forEach((entry) => {
+								if (!entry.isIntersecting) return;
+								const idx = stepOrder.indexOf(entry.target.id);
+								if (idx >= 0) applyStepperState(idx);
+							});
+						},
+						{ threshold: 0.35, rootMargin: '-15% 0px -55% 0px' },
+					);
+					stepSections.forEach((entry) => stepObserver.observe(entry.el));
+					applyStepperState(0);
+				}
 			})();
 		</script>
 	</body>
@@ -768,6 +865,7 @@ const extensibilityCards = [
 		animation: flow-v 2.6s ease-in-out infinite;
 	}
 
+
 	@keyframes flow-h {
 		0% {
 			left: 0%;
@@ -813,6 +911,7 @@ const extensibilityCards = [
 			animation: none;
 		}
 	}
+
 
 	.pipeline-drawer-backdrop {
 		opacity: 0;
