@@ -26,16 +26,11 @@ const docsMk = {
 const extensibilityCards = [
 	{
 		title: '3D Flight Visualization',
-		body: 'Spatial telemetry scenes with attitude and trajectory context for quick anomaly reading.',
-		videoSrc: `${base}videos/live_3d.mp4`,
+		body: 'Spatial telemetry scenes with attitude and trajectory context, including simulated PFD and joystick control-loop interaction.',
+		videoThumbSrc: `${base}videos/live_3d.mp4`,
+		videoModalSrc: `${base}videos/live_3d.mp4`,
 		svgPath:
 			'M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 5l-2-1-2 1M4 5l2-1M4 5l2 1M4 5v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5',
-	},
-	{
-		title: 'Simulated PFD & Joystick',
-		body: 'Desktop HIL workflows with synthetic PFD views and control-loop interaction.',
-		svgPath:
-			'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
 	},
 	{
 		title: 'Automatic Documentation',
@@ -46,17 +41,22 @@ const extensibilityCards = [
 	{
 		title: 'Remote IDE & Debug',
 		body: 'Browser-based coding surface and process attach tooling for distributed diagnostics.',
+		videoThumbSrc: `${base}videos/archivo_bien.mp4`,
+		videoModalSrc: `${base}videos/archivo_bien.mp4`,
 		svgPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
 	},
 	{
 		title: 'Git Remote Management',
 		body: 'Repository operations from your monitoring cockpit without breaking operational focus.',
+		videoThumbSrc: `${base}videos/git.mp4`,
+		videoModalSrc: `${base}videos/git.mp4`,
 		svgPath: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
 	},
 	{
 		title: 'ARINC 429 & MIL-STD-1553',
 		body: 'Real-time decode, parity and SSM checks, plus SQLite-backed registries tailored for avionics stacks.',
-		videoSrc: `${base}videos/live_arinc.mp4`,
+		videoThumbSrc: `${base}videos/ficha_arinc.mp4`,
+		videoModalSrc: `${base}videos/live_arinc.mp4`,
 		svgPath:
 			'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
 		featured: true,
@@ -268,6 +268,10 @@ const extensibilityCards = [
 							extensibilityCards.map((item) => (
 								<article
 									data-reveal
+									data-plugin-open={item.videoModalSrc || ""}
+									data-plugin-title={item.title}
+									role={item.videoModalSrc ? "button" : undefined}
+									tabindex={item.videoModalSrc ? "0" : undefined}
 									class={`group relative isolate overflow-hidden rounded-2xl border bg-slate-900/60 p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_16px_42px_rgba(0,0,0,0.45)] ${
 										item.featured
 											? "border-cyan-400/55 shadow-[0_12px_34px_rgba(34,211,238,0.2)] before:opacity-80"
@@ -287,10 +291,10 @@ const extensibilityCards = [
 										</div>
 										<p class="mt-3 text-sm leading-relaxed text-slate-400">{item.body}</p>
 										{
-											item.videoSrc && (
+											item.videoThumbSrc && (
 												<video
 													class="mt-4 h-auto w-full rounded-lg border border-cyan-500/20 bg-slate-950/80"
-													src={item.videoSrc}
+													src={item.videoThumbSrc}
 													autoplay
 													loop
 													muted
@@ -527,6 +531,21 @@ const extensibilityCards = [
 			</aside>
 		</div>
 
+		<div id="plugin-video-modal-root" class="pointer-events-none fixed inset-0 z-[110] hidden" aria-hidden="true">
+			<div class="plugin-video-backdrop absolute inset-0 bg-slate-950/80 opacity-0 transition-opacity duration-300" data-plugin-video-close></div>
+			<div class="absolute inset-0 flex items-center justify-center p-6">
+				<div class="plugin-video-panel w-full max-w-5xl rounded-2xl border border-cyan-500/30 bg-slate-900/95 p-3 opacity-0 transition-all duration-300">
+					<div class="mb-2 flex items-center justify-between">
+						<h3 id="plugin-video-title" class="font-mono text-sm uppercase tracking-wider text-cyan-300">Plugin video</h3>
+						<button type="button" class="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-slate-300 transition hover:border-cyan-500/40 hover:text-cyan-200" data-plugin-video-close>
+							Close
+						</button>
+					</div>
+					<video id="plugin-video-player" class="h-auto w-full rounded-xl border border-cyan-500/20 bg-slate-950/80" autoplay loop muted playsinline controls preload="metadata"></video>
+				</div>
+			</div>
+		</div>
+
 		<script is:inline>
 			(() => {
 				const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -621,6 +640,53 @@ const extensibilityCards = [
 				});
 				document.addEventListener('keydown', (e) => {
 					if (e.key === 'Escape' && drawerRoot?.classList.contains('pipeline-drawer--open')) closeDrawer();
+				});
+
+				const pluginModalRoot = document.getElementById('plugin-video-modal-root');
+				const pluginVideoEl = document.getElementById('plugin-video-player');
+				const pluginVideoTitle = document.getElementById('plugin-video-title');
+				const openPluginVideo = (src, title) => {
+					if (!pluginModalRoot || !(pluginVideoEl instanceof HTMLVideoElement)) return;
+					if (!src) return;
+					if (pluginVideoTitle) pluginVideoTitle.textContent = title || 'Plugin video';
+					pluginVideoEl.src = src;
+					pluginModalRoot.classList.remove('hidden');
+					pluginModalRoot.setAttribute('aria-hidden', 'false');
+					document.body.style.overflow = 'hidden';
+					requestAnimationFrame(() => {
+						pluginModalRoot.classList.add('plugin-video-modal--open');
+					});
+					void pluginVideoEl.play().catch(() => {});
+				};
+				const closePluginVideo = () => {
+					if (!pluginModalRoot || !(pluginVideoEl instanceof HTMLVideoElement)) return;
+					pluginModalRoot.classList.remove('plugin-video-modal--open');
+					pluginModalRoot.setAttribute('aria-hidden', 'true');
+					document.body.style.overflow = '';
+					setTimeout(() => {
+						pluginVideoEl.pause();
+						pluginVideoEl.removeAttribute('src');
+						pluginVideoEl.load();
+						pluginModalRoot.classList.add('hidden');
+					}, 280);
+				};
+				document.querySelectorAll('[data-plugin-open]').forEach((el) => {
+					const src = el.getAttribute('data-plugin-open');
+					const title = el.getAttribute('data-plugin-title') || '';
+					if (!src) return;
+					el.addEventListener('click', () => openPluginVideo(src, title));
+					el.addEventListener('keydown', (e) => {
+						if (e.key === 'Enter' || e.key === ' ') {
+							e.preventDefault();
+							openPluginVideo(src, title);
+						}
+					});
+				});
+				document.querySelectorAll('[data-plugin-video-close]').forEach((el) => {
+					el.addEventListener('click', closePluginVideo);
+				});
+				document.addEventListener('keydown', (e) => {
+					if (e.key === 'Escape' && pluginModalRoot?.classList.contains('plugin-video-modal--open')) closePluginVideo();
 				});
 			})();
 		</script>
@@ -768,6 +834,23 @@ const extensibilityCards = [
 
 	#pipeline-drawer-root.pipeline-drawer--open .pipeline-drawer-panel {
 		transform: translate3d(0, 0, 0);
+	}
+
+	#plugin-video-modal-root.plugin-video-modal--open {
+		pointer-events: auto;
+	}
+
+	#plugin-video-modal-root.plugin-video-modal--open .plugin-video-backdrop {
+		opacity: 1;
+	}
+
+	.plugin-video-panel {
+		transform: translateY(8px) scale(0.99);
+	}
+
+	#plugin-video-modal-root.plugin-video-modal--open .plugin-video-panel {
+		opacity: 1;
+		transform: translateY(0) scale(1);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
