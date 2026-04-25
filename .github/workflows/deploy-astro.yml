@@ -54,7 +54,7 @@ jobs:
       - name: Verify static output (not README)
         run: |
           test -f astro/dist/index.html
-          grep -q 'Real-time C++ observability' astro/dist/index.html || (echo 'astro/dist/index.html no parece la landing Astro'; exit 1)
+          grep -q 'Understand, replay, and validate your system while it runs.' astro/dist/index.html || (echo 'astro/dist/index.html no parece la landing Astro'; exit 1)
           ls -la astro/dist | head -20
 
       # v5: compatible con deploy-pages@v5; evita avisos de Node 20 deprecado en la acción
