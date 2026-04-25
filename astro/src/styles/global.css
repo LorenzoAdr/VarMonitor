@@ -15,3 +15,28 @@
 .logo-status-led {
 	animation: logo-led-pulse 1.4s ease-in-out infinite;
 }
+
+html,
+body {
+	color-scheme: dark;
+	scrollbar-color: rgb(71 85 105) rgb(2 6 23);
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: rgb(2 6 23);
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgb(51 65 85);
+	border: 2px solid rgb(2 6 23);
+	border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(71 85 105);
+}
